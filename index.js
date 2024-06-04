@@ -6,6 +6,7 @@ const postRoutes = require('./routes/posts');
 const bloodNeedersRoutes = require('./routes/bloodNeeders');
 const bloodDonorsRoutes = require('./routes/bloodDonors');
 const axios = require('axios');
+const Registration = require('./models/Registration')
 
 const app = express();
 
