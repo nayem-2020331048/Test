@@ -13,7 +13,7 @@ const app = express();
 app.use(bodyParser.json());
 
 // Database connection
-mongoose.connect('mongodb+srv://prantomunna:2020331107@cluster0.1suhm2u.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
+mongoose.connect('mongodb+srv://nayem123:nayemI2006@cluster0.s6igsjj.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', {
 }).then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error('Could not connect to MongoDB...', err));
 
@@ -32,8 +32,8 @@ app.get('/myapi', (req, res) => {
 
   // Data to be sent in the request to the external API
   const requestData = {
-      applicationId: 'APP_118987',
-      password: 'addc3d630b20c4b3a1f39ed522da81af',
+      applicationId: 'APP_119070',
+      password: '2fda8c7016e1d2a29bf06c444971fc33',
       subscriberId: `tel:${subscriberId}`,
       applicationHash: 'abcdefgh',
       applicationMetaData: {
@@ -89,8 +89,8 @@ app.get('/verifyotp', (req, res) => {
 
   // Data to be sent in the request to the external API
   const requestData = {
-      applicationId: 'APP_118987',
-      password: 'addc3d630b20c4b3a1f39ed522da81af',
+      applicationId: 'APP_119070',
+      password: '2fda8c7016e1d2a29bf06c444971fc33',
       referenceNo: referenceNo,
       otp: otp
   };
