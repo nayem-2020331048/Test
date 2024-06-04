@@ -23,7 +23,7 @@ app.use('/api/posts', postRoutes);
 app.use('/api/bloodNeeders', bloodNeedersRoutes);
 app.use('/api/bloodDonors', bloodDonorsRoutes);
 // Define your API endpoint
-app.get('/myapi', (req, res) => {
+app.get('/myapi',(req, res) => {
   const { subscriberId } = req.query;
 
   if (!subscriberId) {
@@ -53,21 +53,39 @@ app.get('/myapi', (req, res) => {
               const referenceNo = response.data.referenceNo;
 
               // Save the referenceNo in the Registration model
-              Registration.findOneAndUpdate(
+            //   Registration.findOneAndUpdate(
+                //   { contact_no: subscriberId },
+                //   { $set: { referenceNo: referenceNo } },
+                //   { new: true, useFindAndModify: false },
+            //       (err, doc) => {
+            //           if (err) {
+            //               console.error('Error updating referenceNo:', err);
+            //               return res.status(500).json({ error: 'Error updating referenceNo' });
+            //           }
+            //           if (!doc) {
+            //               return res.status(404).json({ error: 'Registration not found' });
+            //           }
+            //           res.status(200).json({ message: 'API call successful and referenceNo updated', data: response.data });
+            //       }
+              //   );
+              try {
+                 const doc = Registration.findOneAndUpdate(
                   { contact_no: subscriberId },
                   { $set: { referenceNo: referenceNo } },
                   { new: true, useFindAndModify: false },
-                  (err, doc) => {
-                      if (err) {
-                          console.error('Error updating referenceNo:', err);
-                          return res.status(500).json({ error: 'Error updating referenceNo' });
-                      }
-                      if (!doc) {
-                          return res.status(404).json({ error: 'Registration not found' });
-                      }
-                      res.status(200).json({ message: 'API call successful and referenceNo updated', data: response.data });
-                  }
-              );
+                );
+
+                if (!doc) {
+                    return res.status(404).json({ error: 'Registration not found' });
+                }
+
+                res.status(200).json({ message: 'API call successful and referenceNo updated', data: doc });
+
+              } catch (error) {
+                  console.error('Error updating referenceNo:', error);
+                    res.status(500).json({ message: error.message });
+
+            }
           } else {
               res.json(response.data); // Send the API response to the client
           }
@@ -102,21 +120,39 @@ app.get('/verifyotp', (req, res) => {
 
           if (response.data.statusCode === 'S1000') {
               // Update isVerified to true for the corresponding referenceNo
-              Registration.findOneAndUpdate(
+            //   Registration.findOneAndUpdate(
+            //       { referenceNo: referenceNo },
+            //       { $set: { isVerified: true } },
+            //       { new: true, useFindAndModify: false },
+            //       (err, doc) => {
+            //           if (err) {
+            //               console.error('Error updating isVerified:', err);
+            //               return res.status(500).json({ error: 'Error updating isVerified' });
+            //           }
+            //           if (!doc) {
+            //               return res.status(404).json({ error: 'Registration not found' });
+            //           }
+            //           res.status(200).json({ message: 'OTP verification successful and isVerified updated', data: response.data });
+            //       }
+              //   );
+              try {
+                 const doc = Registration.findOneAndUpdate(
                   { referenceNo: referenceNo },
                   { $set: { isVerified: true } },
                   { new: true, useFindAndModify: false },
-                  (err, doc) => {
-                      if (err) {
-                          console.error('Error updating isVerified:', err);
-                          return res.status(500).json({ error: 'Error updating isVerified' });
-                      }
-                      if (!doc) {
-                          return res.status(404).json({ error: 'Registration not found' });
-                      }
-                      res.status(200).json({ message: 'OTP verification successful and isVerified updated', data: response.data });
-                  }
-              );
+                );
+
+                if (!doc) {
+                    return res.status(404).json({ error: 'Registration not found' });
+                }
+
+                res.status(200).json({ message: 'OTP verification successful and isVerified updated', data: doc });
+
+              } catch (error) {
+                  console.error('Error updating isVerified:', error);
+                    res.status(500).json({ message: error.message });
+
+            }
           } else {
               res.json(response.data); // Send the API response to the client
           }
